@@ -1,9 +1,9 @@
-const {expect}  = require('chai');
-const { assert } = require('chai')
+const {assert, expect}  = require('chai');
 const Game = require('../src/Game');
 const User = require('../src/User');
 const ChaseObject = require('../src/ChaseObject');
 const ChaseMap = require('../src/ChaseMap');
+const GameHistory = require('../src/GameHistory');
 
 describe('Game engine', () =>
 {
@@ -11,6 +11,8 @@ describe('Game engine', () =>
     let users = [];
     let chaseobject;
     let bounds;
+    let map;
+    let history;
 
     function get_bounds() {
         let top_left = [48.8569443,2.2940138];
@@ -18,12 +20,8 @@ describe('Game engine', () =>
         let bot_left = [48.8523546,2.3012814];
         let bot_right = [48.8539637,2.3035665];
 
-        bounds = {
-            top_left : top_left,
-            top_right : top_right,
-            bot_left: bot_left,
-            bot_right: bot_right
-        };
+        bounds = [top_left, top_right, bot_left, bot_right];
+
     }
 
     before(() =>
@@ -34,6 +32,7 @@ describe('Game engine', () =>
 
         chaseobject = new ChaseObject([48.8574884, 2.2955138]);
         get_bounds();
+        map = new ChaseMap(bounds);
     });
 
     it('Creates a game', async () =>
@@ -56,8 +55,15 @@ describe('Game engine', () =>
 
     it('Creates a map in the game', async () =>
     {
-        let map = new ChaseMap(bounds);
         let game = new Game(users, chaseobject, map);
         assert.strictEqual(game.getMap(), map);
     });
+
+    it('Creates a history in the game', async () =>
+    {
+        let game = new Game(users, chaseobject, map);
+        assert.instanceOf(game.getHistory(), GameHistory);
+    });
+
+
 });

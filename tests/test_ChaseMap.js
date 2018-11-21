@@ -11,12 +11,7 @@ describe('ChaseMap engine', () =>
         let bot_left = [48.8523546,2.3012814];
         let bot_right = [48.8539637,2.3035665];
 
-        bounds = {
-            top_left : top_left,
-            top_right : top_right,
-            bot_left: bot_left,
-            bot_right: bot_right
-        };
+        bounds = [top_left, top_right, bot_left, bot_right];
 
     });
 
