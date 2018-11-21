@@ -1,6 +1,6 @@
 const {expect}  = require('chai');
 const { assert } = require('chai')
-let User = require('../src/User');
+const User = require('../src/User');
 
 describe('User engine', () =>
 {
@@ -28,8 +28,8 @@ describe('User engine', () =>
     it('Moves a user from a location to another', async () =>
     {
         let pseudo = "Mehdi";
-        let location = [48.8556475,2.2986304];
-        let new_location = [48.8574884,2.2955138];
+        let location = [48.8556475, 2.2986304];
+        let new_location = [48.8574884, 2.2955138];
 
         let user = new User(pseudo, location);
         user.moveTo(new_location);
