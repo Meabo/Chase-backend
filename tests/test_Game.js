@@ -2,13 +2,29 @@ const {expect}  = require('chai');
 const { assert } = require('chai')
 const Game = require('../src/Game');
 const User = require('../src/User');
-const ChaseObject = require('../src/ChaseObject')
+const ChaseObject = require('../src/ChaseObject');
+const ChaseMap = require('../src/ChaseMap');
 
 describe('Game engine', () =>
 {
     let game;
     let users = [];
     let chaseobject;
+    let bounds;
+
+    function get_bounds() {
+        let top_left = [48.8569443,2.2940138];
+        let top_right = [48.8586221,2.2963717];
+        let bot_left = [48.8523546,2.3012814];
+        let bot_right = [48.8539637,2.3035665];
+
+        bounds = {
+            top_left : top_left,
+            top_right : top_right,
+            bot_left: bot_left,
+            bot_right: bot_right
+        };
+    }
 
     before(() =>
     {
@@ -17,6 +33,7 @@ describe('Game engine', () =>
         users.push(user, user1);
 
         chaseobject = new ChaseObject([48.8574884, 2.2955138]);
+        get_bounds();
     });
 
     it('Creates a game', async () =>
@@ -35,5 +52,12 @@ describe('Game engine', () =>
     {
         let game = new Game(users, chaseobject);
         assert.strictEqual(game.getObject(), chaseobject);
+    });
+
+    it('Creates a map in the game', async () =>
+    {
+        let map = new ChaseMap(bounds);
+        let game = new Game(users, chaseobject, map);
+        assert.strictEqual(game.getMap(), map);
     });
 });

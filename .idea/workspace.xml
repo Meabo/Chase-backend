@@ -2,12 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6dfd9e72-9023-4ffc-998a-8f1e00bc086a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/ChaseObject.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/test_ChaseObject.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ChaseMap.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/test_ChaseMap.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/test_RobustPolygon.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/point_inside_polygon.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/robust-point-polygon/orientation.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Game.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/test_Game.js" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_Game.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_user.js" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_user.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -28,7 +32,7 @@
         <counts>
           <entry key="gitignore" value="1" />
           <entry key="html" value="1" />
-          <entry key="js" value="20" />
+          <entry key="js" value="26" />
           <entry key="json" value="1" />
         </counts>
       </usages-collector>
@@ -36,21 +40,21 @@
         <counts>
           <entry key="HTML" value="1" />
           <entry key="JSON" value="1" />
-          <entry key="JavaScript" value="20" />
+          <entry key="JavaScript" value="26" />
           <entry key="PLAIN_TEXT" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="gitignore" value="28" />
-          <entry key="js" value="1678" />
-          <entry key="json" value="30" />
+          <entry key="js" value="2463" />
+          <entry key="json" value="31" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JSON" value="30" />
-          <entry key="JavaScript" value="1678" />
+          <entry key="JSON" value="31" />
+          <entry key="JavaScript" value="2463" />
           <entry key="PLAIN_TEXT" value="28" />
         </counts>
       </usages-collector>
@@ -63,17 +67,8 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/tests/test_user.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="170">
-                  <caret line="10" column="7" lean-forward="true" selection-start-line="6" selection-start-column="4" selection-end-line="10" selection-end-column="7" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/tests/test_ChaseObject.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="238">
-                  <caret line="14" column="46" lean-forward="true" selection-start-line="14" selection-start-column="46" selection-end-line="14" selection-end-column="46" />
+                <state relative-caret-position="34">
+                  <caret line="2" column="36" selection-start-line="2" selection-start-column="36" selection-end-line="2" selection-end-column="36" />
                 </state>
               </provider>
             </entry>
@@ -81,8 +76,8 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/tests/test_location.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="34">
-                  <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="6" selection-end-column="3" />
+                <state relative-caret-position="72">
+                  <caret line="4" column="1" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
                 </state>
               </provider>
             </entry>
@@ -90,8 +85,47 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/tests/test_Game.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="306">
-                  <caret line="18" column="38" selection-start-line="18" selection-start-column="38" selection-end-line="18" selection-end-column="61" />
+                <state relative-caret-position="588">
+                  <caret line="56" column="44" selection-start-line="56" selection-start-column="44" selection-end-line="56" selection-end-column="44" />
+                  <folding>
+                    <element signature="e#363#379#0" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/utils/point_inside_polygon.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state>
+                  <caret column="38" selection-start-column="38" selection-end-column="38" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/tests/test_RobustPolygon.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="544">
+                  <caret line="32" column="2" selection-start-line="32" selection-start-column="2" selection-end-line="32" selection-end-column="2" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/tests/test_ChaseObject.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="180">
+                  <caret line="10" selection-start-line="10" selection-end-line="10" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/tests/test_ChaseMap.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="162">
+                  <caret line="9" column="33" selection-start-line="9" selection-start-column="33" selection-end-line="9" selection-end-column="33" />
                 </state>
               </provider>
             </entry>
@@ -99,8 +133,8 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/package.json">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="119">
-                  <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="4" />
+                <state relative-caret-position="288">
+                  <caret line="16" column="31" selection-start-line="16" selection-start-column="31" selection-end-line="16" selection-end-column="31" />
                 </state>
               </provider>
             </entry>
@@ -110,10 +144,19 @@
       <split-second>
         <leaf>
           <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/ChaseMap.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="180">
+                  <caret line="10" column="5" selection-start-line="10" selection-start-column="5" selection-end-line="10" selection-end-column="5" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/Game.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="68">
-                  <caret line="4" column="20" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="20" />
+                <state relative-caret-position="357">
+                  <caret line="21" column="29" selection-start-line="21" selection-start-column="29" selection-end-line="21" selection-end-column="29" />
                 </state>
               </provider>
             </entry>
@@ -121,17 +164,17 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/User.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="306">
+                <state relative-caret-position="324">
                   <caret line="18" column="37" selection-start-line="18" selection-start-column="37" selection-end-line="18" selection-end-column="37" />
                 </state>
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/ChaseObject.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="34">
-                  <caret line="2" column="4" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="4" />
+                <state relative-caret-position="126">
+                  <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
                 </state>
               </provider>
             </entry>
@@ -150,6 +193,7 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>var</find>
+      <find>let</find>
     </findStrings>
     <replaceStrings>
       <replace>let</replace>
@@ -163,14 +207,19 @@
       <list>
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/tests/test_location.js" />
         <option value="$PROJECT_DIR$/src/User.js" />
         <option value="$PROJECT_DIR$/tests/test_user.js" />
-        <option value="$PROJECT_DIR$/src/Game.js" />
-        <option value="$PROJECT_DIR$/tests/test_Game.js" />
         <option value="$PROJECT_DIR$/tests/test_ChaseObject.js" />
         <option value="$PROJECT_DIR$/src/ChaseObject.js" />
+        <option value="$PROJECT_DIR$/src/ChaseMap.js" />
+        <option value="$PROJECT_DIR$/tests/test_ChaseMap.js" />
+        <option value="$PROJECT_DIR$/tests/test_Game.js" />
+        <option value="$PROJECT_DIR$/src/Game.js" />
+        <option value="$PROJECT_DIR$/utils/robust-point-polygon/orientation.js" />
+        <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/utils/point_inside_polygon.js" />
+        <option value="$PROJECT_DIR$/tests/test_RobustPolygon.js" />
       </list>
     </option>
   </component>
@@ -211,12 +260,18 @@
             <path>
               <item name="Chase-backend" type="b2602c69:ProjectViewProjectNode" />
               <item name="Chase-backend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="tests" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Chase-backend" type="b2602c69:ProjectViewProjectNode" />
               <item name="Chase-backend" type="462c0819:PsiDirectoryNode" />
-              <item name="tests" type="462c0819:PsiDirectoryNode" />
+              <item name="utils" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Chase-backend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Chase-backend" type="462c0819:PsiDirectoryNode" />
+              <item name="utils" type="462c0819:PsiDirectoryNode" />
+              <item name="robust-point-polygon" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -229,7 +284,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1542798215788" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1542800609089" />
     <property name="javascript.nodejs.core.library.configured.version" value="10.13.0" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/tests" />
     <property name="nodejs.mocha.mocha_node_package_dir" value="$USER_HOME$/AppData/Roaming/npm/node_modules/mocha" />
@@ -238,6 +293,12 @@
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="G:\IdeaProjects\Chase-backend\utils" />
+      <recent name="G:\IdeaProjects\Chase-backend\utils\robust-point-polygon" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -288,44 +349,44 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1542791751711</updated>
-      <workItem from="1542791761380" duration="3401000" />
+      <workItem from="1542791761380" duration="5238000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Test_suites - 2018.11.21 at 12h 03m 21s.xml">
+    <history-entry file="Test_suites - 2018.11.21 at 12h 17m 10s.xml">
       <configuration name="Test suites" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="Test_suites - 2018.11.21 at 12h 04m 41s.xml">
+    <history-entry file="Test_suites - 2018.11.21 at 12h 18m 14s.xml">
       <configuration name="Test suites" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="Test_suites - 2018.11.21 at 12h 05m 04s.xml">
+    <history-entry file="Test_suites - 2018.11.21 at 12h 18m 30s.xml">
       <configuration name="Test suites" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="Test_suites - 2018.11.21 at 12h 05m 17s.xml">
+    <history-entry file="Test_suites - 2018.11.21 at 12h 19m 01s.xml">
       <configuration name="Test suites" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="Test_suites - 2018.11.21 at 12h 06m 38s.xml">
+    <history-entry file="Test_suites - 2018.11.21 at 12h 19m 21s.xml">
       <configuration name="Test suites" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="Test_suites - 2018.11.21 at 12h 07m 41s.xml">
+    <history-entry file="Test_suites - 2018.11.21 at 12h 19m 48s.xml">
       <configuration name="Test suites" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="Test_suites - 2018.11.21 at 12h 09m 30s.xml">
+    <history-entry file="Test_suites - 2018.11.21 at 12h 26m 20s.xml">
       <configuration name="Test suites" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="Test_suites - 2018.11.21 at 12h 09m 39s.xml">
+    <history-entry file="Test_suites - 2018.11.21 at 12h 26m 37s.xml">
       <configuration name="Test suites" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="Test_suites - 2018.11.21 at 12h 11m 11s.xml">
+    <history-entry file="Test_suites - 2018.11.21 at 12h 32m 14s.xml">
       <configuration name="Test suites" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="Test_suites - 2018.11.21 at 12h 11m 21s.xml">
+    <history-entry file="Test_suites - 2018.11.21 at 12h 41m 49s.xml">
       <configuration name="Test suites" configurationId="mocha-javascript-test-runner" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3401000" />
+    <option name="totallyTimeSpent" value="5238000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-8" width="1696" height="1026" extended-state="6" />
@@ -338,15 +399,15 @@
       <window_info id="UI Designer" />
       <window_info id="Capture Tool" />
       <window_info id="Learn" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.10941321" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16198044" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Version Control" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" weight="0.3295964" />
+      <window_info anchor="bottom" id="Terminal" visible="true" weight="0.3295964" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.264574" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.264574" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -429,57 +490,95 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/User.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
+        <state relative-caret-position="324">
           <caret line="18" column="37" selection-start-line="18" selection-start-column="37" selection-end-line="18" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Game.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="20" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test_location.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="6" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test_Game.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="38" selection-start-line="18" selection-start-column="38" selection-end-line="18" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test_user.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="7" lean-forward="true" selection-start-line="6" selection-start-column="4" selection-end-line="10" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test_ChaseObject.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="46" lean-forward="true" selection-start-line="14" selection-start-column="46" selection-end-line="14" selection-end-column="46" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ChaseObject.js">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ChaseMap.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="10" column="5" selection-start-line="10" selection-start-column="5" selection-end-line="10" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test_user.js">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
-          <caret line="2" column="4" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="4" />
+          <caret line="2" column="36" selection-start-line="2" selection-start-column="36" selection-end-line="2" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test_location.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="4" column="1" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Game.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="21" column="29" selection-start-line="21" selection-start-column="29" selection-end-line="21" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test_Game.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="588">
+          <caret line="56" column="44" selection-start-line="56" selection-start-column="44" selection-end-line="56" selection-end-column="44" />
+          <folding>
+            <element signature="e#363#379#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="16" column="31" selection-start-line="16" selection-start-column="31" selection-end-line="16" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test_ChaseObject.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test_ChaseMap.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="9" column="33" selection-start-line="9" selection-start-column="33" selection-end-line="9" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/robust-point-polygon/orientation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="217">
+          <caret line="13" column="6" selection-start-line="13" selection-start-column="6" selection-end-line="13" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/point_inside_polygon.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="38" selection-start-column="38" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test_RobustPolygon.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="32" column="2" selection-start-line="32" selection-start-column="2" selection-end-line="32" selection-end-column="2" />
         </state>
       </provider>
     </entry>
