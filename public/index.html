@@ -7,7 +7,7 @@
     /* Always set the map height explicitly to define the size of the div
      * element that contains the map. */
     #map {
-      height: 100%;
+      height: 80%;
       width:100%;
     }
     /* Optional: Makes the sample page fill the window. */
@@ -19,7 +19,12 @@
   </style>
 </head>
 <body>
-<div id="map"></div>
+
+<div id="map"> </div>
+
+<div>
+<button onclick="StopMoving()">Stop Moving</button>
+</div>
 <script src="javascripts/socket.io.js"></script>
 
 <script>
@@ -35,6 +40,7 @@
         alert(msg);
 
     });
+
 
     socket.on('get_map', function(params)
     {
@@ -57,6 +63,11 @@
         let result = [new_loc.lat, new_loc.lng];
         transition(result);
     });
+
+    function StopMoving()
+    {
+        socket.emit('stopmoving');
+    }
 
     let numDeltas = 100;
     let delay = 10; //milliseconds
@@ -104,6 +115,14 @@
             fillColor: '#FF0000',
             fillOpacity: 0.15
         });
+
+        marker = new google.maps.Marker({
+            position: center,
+            icon:'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+            map: map,
+            title: 'Object'
+        });
+
         bermudaTriangle.setMap(map);
     }
 </script>
