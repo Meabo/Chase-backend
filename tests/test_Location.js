@@ -3,7 +3,7 @@ const Game = require('../src/Game');
 const Player = require('../src/User');
 const ChaseObject = require('../src/ChaseObject');
 const ChaseMap = require('../src/ChaseMap');
-const inside = require('../utils/point_inside_polygon');
+const LocationUtils = require('../utils/point_inside_polygon');
 
 describe('Location engine', () =>
 {
@@ -25,15 +25,18 @@ describe('Location engine', () =>
 
     it('Should return -1 if a player is inside the Map', async () =>
     {
-        assert.equal(inside(map.getBounds(), player.getLocation()), -1);
+        assert.equal(LocationUtils.robustPointInPolygon(map.getBounds(), player.getLocation()), -1);
     });
 
     it('Should return 1 if a player is inside the Map', async () =>
     {
         player = new Player("Mehdi", [48.8514708,2.2972489]);
-        assert.equal(inside(map.getBounds(), player.getLocation()), 1);
+        assert.equal(LocationUtils.robustPointInPolygon(map.getBounds(), player.getLocation()), 1);
     });
-
+    it('should give the distance 0 between 2 entities which are at the same pos', async () =>
+    {
+        assert.equal(LocationUtils.distance(0, 0, 0, 0), 0);
+    })
 
 
 });

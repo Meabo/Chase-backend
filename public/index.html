@@ -1,13 +1,113 @@
 <html>
-
 <head>
-  <title>Express</title>
-  <link rel="stylesheet" href="/stylesheets/style.css">
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
+  <title>Simple Polygon</title>
+  <style>
+    /* Always set the map height explicitly to define the size of the div
+     * element that contains the map. */
+    #map {
+      height: 100%;
+      width:100%;
+    }
+    /* Optional: Makes the sample page fill the window. */
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
 </head>
-
 <body>
-  <h1>Express</h1>
-  <p>Welcome to Express</p>
-</body>
+<div id="map"></div>
+<script src="javascripts/socket.io.js"></script>
 
+<script>
+
+    // This example creates a simple polygon representing the Bermuda Triangle.
+    let socket = io("http://localhost:3000");
+    let map;
+    let marker;
+    let position = [48.8556475, 2.2986304];
+
+    socket.on('hello', function(msg)
+    {
+        alert(msg);
+
+    });
+
+    socket.on('get_map', function(params)
+    {
+        console.log(params);
+        initMap(params.center, params.area);
+    });
+
+    socket.on('send_begin_position', function(LatLng)
+    {
+        marker = new google.maps.Marker({
+            position: LatLng,
+            map: map,
+            title: 'Player Position'
+        });
+    });
+    
+    socket.on('movement', function(new_loc)
+    {
+        console.log('got movement');
+        let result = [new_loc.lat, new_loc.lng];
+        transition(result);
+    });
+
+    let numDeltas = 100;
+    let delay = 10; //milliseconds
+    let i = 0;
+    let deltaLat;
+    let deltaLng;
+
+    function transition(result){
+        i = 0;
+        deltaLat = (result[0] - position[0])/numDeltas;
+        deltaLng = (result[1] - position[1])/numDeltas;
+        moveMarker();
+    }
+
+    function moveMarker(){
+        position[0] += deltaLat;
+        position[1] += deltaLng;
+        let latlng = new google.maps.LatLng(position[0], position[1]);
+        marker.setTitle("Latitude:"+position[0]+" | Longitude:"+position[1]);
+        marker.setPosition(latlng);
+        if(i!=numDeltas){
+            i++;
+            setTimeout(moveMarker, delay);
+        }
+    }
+
+
+
+    function initMap(center, area)
+    {
+        map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 16,
+            center: center,
+            mapTypeId: 'terrain'
+        });
+
+        // Define the LatLng coordinates for the polygon's path.
+
+        // Construct the polygon.
+        let bermudaTriangle = new google.maps.Polygon({
+            paths: area,
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#FF0000',
+            fillOpacity: 0.15
+        });
+        bermudaTriangle.setMap(map);
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7e9hT7XciYcAf0g0lG4p0kYSGQBcrLrA">
+</script>
+</body>
 </html>

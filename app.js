@@ -1,20 +1,13 @@
-let express = require('express');
-let path = require('path');
-let cookieParser = require('cookie-parser');
-let logger = require('morgan');
+let app = require('express')();
+let http = require('http').Server(app);
+let SocketHandling = require('./SocketsHandling')(http);
 
-let indexRouter = require('./routes/index');
-let usersRouter = require('./routes/users');
 
-let app = express();
+app.get('/', function(req, res){
+    res.sendFile(__dirname + '/index.html');
+});
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-
-module.exports = app;
+http.listen(3000, function(){
+    console.log('listening on *:3000');
+});
