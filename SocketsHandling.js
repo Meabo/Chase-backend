@@ -4,7 +4,8 @@ const LocationUtils = require('./utils/point_inside_polygon');
 exports = module.exports = function(http)
 {
     const googleMapsClient = require('@google/maps').createClient({
-        key: 'AIzaSyA7e9hT7XciYcAf0g0lG4p0kYSGQBcrLrA'
+        key: 'AIzaSyA7e9hT7XciYcAf0g0lG4p0kYSGQBcrLrA',
+        Promise: Promise
     });
 
     let io = require('socket.io')(http);
@@ -63,10 +64,17 @@ exports = module.exports = function(http)
     //Todo
     function calculate_shortest_path()
     {
-        /*googleMapsClient.directions({
-            origin:,
-            destination:
-        })*/
+        googleMapsClient.directions({origin:current_loc,
+            destination:center})
+            .asPromise()
+            .then((response) =>
+            {
+                console.log(response.json.result);
+            })
+            .catch((err) =>
+            {
+                console.log(err);
+            })
     }
 
     function GoBackToCenter()
