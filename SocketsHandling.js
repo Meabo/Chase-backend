@@ -43,7 +43,7 @@ exports = module.exports = function(http)
     function getRandomValue()
     {
         let random_number = (Math.random() * 20) - 10;
-        console.log(random_number);
+        //console.log(random_number);
         return random_number;
 
     }
@@ -55,6 +55,7 @@ exports = module.exports = function(http)
         send_location_interval =  setInterval(function()
         {
             PushMovements(current_loc);
+            console.log(CoordinatesXY(current_loc));
             InsideOrOutsideChecker();
             socket.emit("movement", current_loc);
         }, 2000) // Every 2 seconds
@@ -62,19 +63,44 @@ exports = module.exports = function(http)
 
 
     //Todo
-    function calculate_shortest_path()
+    function calculate_shortest_path(socket)
     {
-        googleMapsClient.directions({origin:current_loc,
-            destination:center})
+            console.log(current_loc);
+            googleMapsClient.directions
+            ({
+                origin: current_loc,
+                destination: center,
+                mode: 'walking',
+            })
             .asPromise()
             .then((response) =>
             {
-                console.log(response.json.result);
+                //gconsole.log(response.json.routes[0]);
+               socket.emit('get_polyline', response.json.routes[0].overview_polyline);
             })
             .catch((err) =>
             {
                 console.log(err);
             })
+
+    }
+
+    function CoordinatesXY(lat, lng)
+    {
+        let TILE_SIZE = 256;
+        let scale = 1 << 20;
+
+        let siny = Math.sin(lat * Math.PI / 180);
+        siny = Math.min(Math.max(siny, -0.9999), 0.9999);
+
+        let x = TILE_SIZE * (0.5 + lng / 360);
+        let y = TILE_SIZE * (0.5 - Math.log((1 + siny) / (1 - siny)) / (4 * Math.PI));
+
+
+        let tile_x = Math.floor(x * scale / TILE_SIZE);
+        let tile_y = Math.floor(y * scale / TILE_SIZE);
+
+        return [tile_x, tile_y];
     }
 
     function GoBackToCenter()
@@ -94,7 +120,6 @@ exports = module.exports = function(http)
         switch(result)
         {
             case -1:
-                console.log('inside');
                 break;
             case 1:
                 console.log('outside');
@@ -153,6 +178,12 @@ exports = module.exports = function(http)
         {
             console.log('Stop moving');
             StopMoving();
+        });
+
+        socket.on('calculate_shortest_path', function(data)
+        {
+            console.log('Calculate shortest');
+            calculate_shortest_path(socket);
         })
     });
 
