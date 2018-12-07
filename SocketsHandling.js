@@ -55,7 +55,7 @@ exports = module.exports = function(http)
         send_location_interval =  setInterval(function()
         {
             PushMovements(current_loc);
-            console.log(CoordinatesXY(current_loc));
+            console.log(CoordinatesXY(current_loc.lat, current_loc.lng));
             InsideOrOutsideChecker();
             socket.emit("movement", current_loc);
         }, 2000) // Every 2 seconds
