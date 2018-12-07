@@ -14,7 +14,8 @@ class AstarAlgorithm
     isValid(row, col)
     {
         //Is inside ? Need impl with real algo
-        console.log('Row and Col', row, col, this.row, this.col);
+        //
+        //console.log('Row and Col', row, col, this.row, this.col);
         return (row >= 0) && (row < this.row) &&
             (col >= 0) && (col < this.col);
     }
@@ -23,7 +24,7 @@ class AstarAlgorithm
     {
         // Returns true if the cell is not blocked else false
         //console.log(this.grid);
-       if (this.grid[col][row] === 1)
+       if (this.grid[row][col] === 1)
        {
            return true;
        }
@@ -78,15 +79,17 @@ class AstarAlgorithm
             if (this.isDestination(current_x, current_y, dest))
             {
                 // We found the destination
+                console.log('Destination found');
+                console.log('Current x & Current y', current_x, current_y);
+                console.log('Parent x & Parent y ', prev_x, prev_y);
                 this.cell_details[current_x][current_y].set_parent_x(prev_x);
                 this.cell_details[current_x][current_y].set_parent_y(prev_y);
                 this.destination_found = true;
-                console.log('Destination found');
+                this.displaylist(this.cell_details);
                 this.trace_path(src, dest);
                 return true;
             }
-            else if (this.closed_list[current_x][current_y] === false
-                && this.isUnBlocked(current_x, current_y) === true)
+            else if (this.closed_list[current_x][current_y] === false && this.isUnBlocked(current_x, current_y) === true)
             {
                 let new_g = this.cell_details[prev_x][prev_y].get_g() + value;
                 let new_h = this.calculateHeuristicValue(current_x, current_y, dest);
@@ -123,18 +126,13 @@ class AstarAlgorithm
         let src_y = src.y;
 
        // queue.push([dest_x, dest_y]);
-        while (dest_x !== src_x && dest_y !== src_y)
+        while (!(dest_x === src_x && dest_y === src_y))
         {
-            if (this.cell_details[dest_x][dest_y].get_parent_x() && this.cell_details[dest_x][dest_y].get_parent_y())
-            {
                 queue.push([dest_x, dest_y]);
-                dest_x = this.cell_details[dest_x][dest_y].get_parent_x();
-                dest_y = this.cell_details[dest_x][dest_y].get_parent_y();
-            }
-            else
-            {
-                break;
-            }
+                let temp_x = (this.cell_details[dest_x][dest_y]).get_parent_x();
+                let temp_y = this.cell_details[dest_x][dest_y].get_parent_y();
+                dest_x = temp_x;
+                dest_y = temp_y;
         }
         queue.push([dest_x, dest_y]);
 
@@ -244,7 +242,7 @@ class AstarAlgorithm
 
         // Initialisation of the source
         //console.log(this.cell_details[0]);
-        this.cell_details[source.x][source.y] = new Cell(source.x, source.y, 0.0);
+        this.cell_details[source.x][source.y] = new Cell(source.x, source.y, 0.0, 0.0, 0.0);
 
         // Adding the starting cell in the Open List
         this.open_list.set([source.x, source.y], 0);
@@ -264,12 +262,16 @@ class AstarAlgorithm
            let result =  this.visit_neighbors(first_entry_x, first_entry_y, source, destination);
            if (result === true)
            {
+
                //console.log('Destination Found');
+               this.displaylist(this.cell_details);
+
                return true;
            }
-        }
 
+        }
         this.displaylist(this.cell_details);
+
 
         if (this.destination_found === false)
             console.log('Failed to find the Destination Cell');
@@ -313,10 +315,6 @@ class Cell
         return this.g;
     }
 
-    get_h()
-    {
-        return this.h;
-    }
 
     get_f()
     {
@@ -329,25 +327,17 @@ class Cell
 function Astar()
 {
     let src = {x:0, y:0};
-    let dest = {x: 2, y:1};
-    /*let grid = [
-               [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    ]*/
+    let dest = {x: 4, y:4};
+
     let grid = [
-        [1, 1, 1],
-        [1, 0, 1],
+        [1, 1, 0, 1, 0],
+        [1, 0, 1, 1, 0],
+        [1, 0, 0, 1, 0],
+        [1, 1, 1, 0, 1],
+        [1, 1, 1, 0, 1],
     ];
 
-    let astar = new AstarAlgorithm(grid, 3, 2);
+    let astar = new AstarAlgorithm(grid, 5, 5);
     console.log(astar.grid);
     astar.AstarSearch(src, dest);
 }
