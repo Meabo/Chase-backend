@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6dfd9e72-9023-4ffc-998a-8f1e00bc086a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/A-search algorithm_Real_Map.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/A-search algorithm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/A-search algorithm.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -34,7 +34,7 @@
         <counts>
           <entry key="gitignore" value="1" />
           <entry key="html" value="3" />
-          <entry key="js" value="43" />
+          <entry key="js" value="45" />
           <entry key="json" value="2" />
           <entry key="www" value="1" />
         </counts>
@@ -43,7 +43,7 @@
         <counts>
           <entry key="HTML" value="3" />
           <entry key="JSON" value="2" />
-          <entry key="JavaScript" value="44" />
+          <entry key="JavaScript" value="46" />
           <entry key="PLAIN_TEXT" value="1" />
         </counts>
       </usages-collector>
@@ -51,7 +51,7 @@
         <counts>
           <entry key="gitignore" value="28" />
           <entry key="html" value="1186" />
-          <entry key="js" value="14427" />
+          <entry key="js" value="17218" />
           <entry key="json" value="31" />
           <entry key="www" value="3" />
         </counts>
@@ -60,7 +60,7 @@
         <counts>
           <entry key="HTML" value="1186" />
           <entry key="JSON" value="31" />
-          <entry key="JavaScript" value="14430" />
+          <entry key="JavaScript" value="17221" />
           <entry key="PLAIN_TEXT" value="28" />
         </counts>
       </usages-collector>
@@ -71,21 +71,35 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SocketsHandling.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="900">
-              <caret line="50" column="5" selection-start-line="50" selection-start-column="5" selection-end-line="50" selection-end-column="5" />
+            <state relative-caret-position="382">
+              <caret line="150" column="20" lean-forward="true" selection-start-line="150" selection-start-column="20" selection-end-line="150" selection-end-column="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/A-search algorithm.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="413">
+              <caret line="286" column="10" selection-start-line="286" selection-start-column="10" selection-end-line="286" selection-end-column="10" />
+              <folding>
+                <element signature="n#!!block;n#displaylist#0;n#AstarAlgorithm#0" />
+                <element signature="n#Cell#0" />
+                <element signature="n#!!block;n#get_g#0;n#Cell#0" />
+                <element signature="n#!!block;n#get_f#0;n#Cell#0" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/A-search algorithm.js">
+        <entry file="file://$PROJECT_DIR$/src/A-search algorithm_Real_Map.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="402">
-              <caret line="349" column="42" selection-start-line="349" selection-start-column="42" selection-end-line="349" selection-end-column="42" />
+            <state relative-caret-position="351">
+              <caret line="430" column="20" selection-start-line="430" selection-start-column="20" selection-end-line="430" selection-end-column="20" />
               <folding>
-                <element signature="n#!!block;n#displaylist#0;n#AstarAlgorithm#0" />
-                <element signature="n#!!block;n#get_g#0;n#Cell#0" />
-                <element signature="n#!!block;n#get_f#0;n#Cell#0" />
+                <element signature="e#1151#1484#0" />
+                <element signature="e#10861#11010#0" />
               </folding>
             </state>
           </provider>
@@ -108,8 +122,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utils/point_inside_polygon.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="18">
-              <caret line="1" column="24" selection-start-line="1" selection-start-column="4" selection-end-line="1" selection-end-column="24" />
+            <state relative-caret-position="85">
+              <caret line="5" column="22" lean-forward="true" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
               <folding>
                 <element signature="n#!!block;n#robustPointInPolygon#0" />
                 <element signature="n#!!block;n#distance#0" />
@@ -135,6 +149,10 @@
       <find>var</find>
       <find>Cell</find>
       <find>console.log</find>
+      <find>grid</find>
+      <find>inside</find>
+      <find>this.row</find>
+      <find>LocationUtils</find>
     </findStrings>
     <replaceStrings>
       <replace>assert</replace>
@@ -171,6 +189,7 @@
         <option value="$PROJECT_DIR$/public/index.html" />
         <option value="$PROJECT_DIR$/SocketsHandling.js" />
         <option value="$PROJECT_DIR$/src/A-search algorithm.js" />
+        <option value="$PROJECT_DIR$/src/A-search algorithm_Real_Map.js" />
       </list>
     </option>
   </component>
@@ -191,8 +210,8 @@
     </packageJsonPaths>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1912" />
-    <option name="y" value="-8" />
+    <option name="x" value="1900" />
+    <option name="y" value="145" />
     <option name="width" value="1552" />
     <option name="height" value="840" />
   </component>
@@ -250,7 +269,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1544209864089" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1544227234764" />
     <property name="javascript.nodejs.core.library.configured.version" value="10.13.0" />
     <property name="last_opened_file_path" value="C:/Documents and Settings" />
     <property name="nodejs.mocha.mocha_node_package_dir" value="$USER_HOME$/AppData/Roaming/npm/node_modules/mocha" />
@@ -261,6 +280,9 @@
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="G:\IdeaProjects\Chase-backend\src" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="G:\IdeaProjects\Chase-backend\tests" />
       <recent name="G:\IdeaProjects\Chase-backend\tests\LibraryTest" />
@@ -280,7 +302,10 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.A-search algorithm.js">
+  <component name="RunManager" selected="Node.js.A-search algorithm_Real_Map.js">
+    <configuration name="A-search algorithm_Real_Map.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" nameIsGenerated="true" node-parameters="--max-old-space-size=8192" path-to-js-file="A-search algorithm_Real_Map.js" working-dir="$PROJECT_DIR$/src">
+      <method v="2" />
+    </configuration>
     <configuration name="A-search algorithm.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" nameIsGenerated="true" path-to-js-file="A-search algorithm.js" working-dir="$PROJECT_DIR$/src">
       <method v="2" />
     </configuration>
@@ -304,9 +329,11 @@
       <item itemvalue="Node.js.Node.js Launch" />
       <item itemvalue="Node.js.test_Location.js" />
       <item itemvalue="Node.js.A-search algorithm.js" />
+      <item itemvalue="Node.js.A-search algorithm_Real_Map.js" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Node.js.A-search algorithm_Real_Map.js" />
         <item itemvalue="Node.js.A-search algorithm.js" />
         <item itemvalue="Node.js.test_Location.js" />
       </list>
@@ -333,7 +360,7 @@
       <workItem from="1543833088695" duration="345000" />
       <workItem from="1544132748055" duration="867000" />
       <workItem from="1544183207022" duration="21136000" />
-      <workItem from="1544213392021" duration="3434000" />
+      <workItem from="1544213392021" duration="13559000" />
     </task>
     <servers />
   </component>
@@ -370,7 +397,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="61035000" />
+    <option name="totallyTimeSpent" value="71160000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -576,16 +603,6 @@
     <entry file="file://$PROJECT_DIR$/routes/users.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/SocketsHandling.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="900">
-          <caret line="50" column="5" selection-start-line="50" selection-start-column="5" selection-end-line="50" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/index.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="36">
@@ -593,10 +610,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/routes/index.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/utils/point_inside_polygon.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="1" column="24" selection-start-line="1" selection-start-column="4" selection-end-line="1" selection-end-column="24" />
+        <state relative-caret-position="85">
+          <caret line="5" column="22" lean-forward="true" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
           <folding>
             <element signature="n#!!block;n#robustPointInPolygon#0" />
             <element signature="n#!!block;n#distance#0" />
@@ -604,14 +624,33 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/SocketsHandling.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="382">
+          <caret line="150" column="20" lean-forward="true" selection-start-line="150" selection-start-column="20" selection-end-line="150" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/A-search algorithm.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="402">
-          <caret line="349" column="42" selection-start-line="349" selection-start-column="42" selection-end-line="349" selection-end-column="42" />
+        <state relative-caret-position="413">
+          <caret line="286" column="10" selection-start-line="286" selection-start-column="10" selection-end-line="286" selection-end-column="10" />
           <folding>
             <element signature="n#!!block;n#displaylist#0;n#AstarAlgorithm#0" />
+            <element signature="n#Cell#0" />
             <element signature="n#!!block;n#get_g#0;n#Cell#0" />
             <element signature="n#!!block;n#get_f#0;n#Cell#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/A-search algorithm_Real_Map.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="351">
+          <caret line="430" column="20" selection-start-line="430" selection-start-column="20" selection-end-line="430" selection-end-column="20" />
+          <folding>
+            <element signature="e#1151#1484#0" />
+            <element signature="e#10861#11010#0" />
           </folding>
         </state>
       </provider>
