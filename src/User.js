@@ -1,24 +1,11 @@
-class User
-{
-    constructor(pseudo_, location_)
-    {
-        this.pseudo = pseudo_;
-        this.location = location_;
-    }
-    getPseudo()
-    {
-        return this.pseudo;
-    }
-    getLocation()
-    {
-        return this.location;
-    }
-
-    moveTo(new_location)
-    {
-        this.location = new_location;
-    }
+class User {
+  constructor(pseudo_, email_) {
+    this.pseudo = pseudo_;
+    this.email_ = email_;
+  }
+  getEmail() {
+    return this.email_;
+  }
 }
-
 
 module.exports = User;
