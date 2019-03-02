@@ -9,27 +9,22 @@ describe("Game engine", () => {
   let game;
   let players = [];
   let chaseobject;
-  let bounds;
   let map;
-  let history;
 
   function get_bounds() {
-    let top_left = [48.8569443, 2.2940138];
-    let top_right = [48.8586221, 2.2963717];
-    let bot_left = [48.8523546, 2.3012814];
-    let bot_right = [48.8539637, 2.3035665];
-
-    bounds = [top_left, top_right, bot_left, bot_right];
+    const top_left = [48.8569443, 2.2940138];
+    const top_right = [48.8586221, 2.2963717];
+    const bot_left = [48.8523546, 2.3012814];
+    const bot_right = [48.8539637, 2.3035665];
+    return [top_left, top_right, bot_left, bot_right];
   }
 
   before(() => {
-    let player = new Player("Mehdi", [48.8556475, 2.2986304]);
-    let player1 = new Player("Bebert", [48.8574884, 2.2955138]);
+    const player = new Player("Mehdi", [48.8556475, 2.2986304]);
+    const player1 = new Player("Bebert", [48.8574884, 2.2955138]);
     players.push(player, player1);
-
     chaseobject = new ChaseObject([48.8574884, 2.2955138]);
-    get_bounds();
-    map = new ChaseMap(bounds);
+    map = new ChaseMap(get_bounds());
   });
 
   it("Creates a game", async () => {

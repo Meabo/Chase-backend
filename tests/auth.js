@@ -8,7 +8,7 @@ describe("Authentication", () => {
   const callback = sinon.fake.returns(true);
 
   before(() => {
-    new_user = new User("mehdi", "aboumehdi.pro@gmail.com");
+    new_user = new User("aboumehdi.pro@gmail.com");
     sinon.replace(Firebase.AuthGateway, "SignUp", callback);
     sinon.replace(Firebase.AuthGateway, "SignIn", callback);
     sinon.replace(Firebase.AuthGateway, "SignOut", callback);
