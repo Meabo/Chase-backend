@@ -13,13 +13,21 @@ describe("Area engine", () => {
     bounds = [top_left, top_right, bot_left, bot_right];
   });
 
-  it("Creates a Area", async () => {
+  it("Creates an Area", async () => {
     let area = new Area();
     assert.instanceOf(area, Area);
   });
 
-  it("Creates a Area with a loc and bounds", async () => {
+  it("Creates an Area with a loc and bounds", async () => {
     let area = new Area(loc, bounds);
     assert.deepEqual(area.getBounds(), bounds);
   });
+
+  it("Should have a name");
+
+  it("Should have rooms inside");
+
+  it("Should detect if a user joins/leaves an Area");
+
+  it("Should create a new Area if conditions are met");
 });

@@ -26,4 +26,6 @@ describe("Create a Player Profile", () => {
       player_type: "attack"
     });
   });
+
+  it("Should update a profile");
 });

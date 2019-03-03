@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "mocha --reporter mochawesome tests/"
+    "test": "mocha tests/"
   },
   "dependencies": {
     "@google/maps": "^0.5.5",

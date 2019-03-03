@@ -52,27 +52,15 @@ describe("Game options", () => {
     assert.instanceOf(game.getHistory(), GameHistory);
   });
 
-  it("Should begin a timer", async done => {
-    done("not implemented yet");
-  });
+  it("Should begin a timer");
 
-  it("Should end the game when the timer is finished", async done => {
-    done("not implemented yet");
-  });
+  it("Should end the game when the timer is finished");
 
-  it("Should acknowledge players when a player location change", async done => {
-    done("not implemented yet");
-  });
+  it("Should acknowledge players when a player location change");
 
-  it("Should acknowledge players when a player catch the ChaseObject", async done => {
-    done("not implemented yet");
-  });
+  it("Should acknowledge players when a player catch the ChaseObject");
 
-  it("Should acknowledge players when a player steal another player", async done => {
-    done("not implemented yet");
-  });
+  it("Should acknowledge players when a player steal another player");
 
-  it("Should acknowledge players when a player uses a skill", async done => {
-    done("not implemented yet");
-  });
+  it("Should acknowledge players when a player uses a skill");
 });
