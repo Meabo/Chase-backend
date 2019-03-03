@@ -1,14 +1,13 @@
 const { assert, expect } = require("chai");
-const Game = require("../src/Game");
 const Player = require("../src/Player");
-const ChaseObject = require("../src/ChaseObject");
-const ChaseMap = require("../src/ChaseMap");
+const Area = require("../src/Area");
 const LocationUtils = require("../utils/point_inside_polygon");
 
 describe("Location engine", () => {
   let player;
-  let map;
+  let area;
   let bounds;
+  const loc = [48.8556475, 2.2986304];
 
   before(() => {
     player = new Player("Mehdi", [48.8556475, 2.2986304]);
@@ -18,20 +17,26 @@ describe("Location engine", () => {
     let bot_right = [48.8539637, 2.3035665];
 
     bounds = [top_left, top_right, bot_left, bot_right];
-    map = new ChaseMap(bounds);
+    area = new Area(loc, bounds);
   });
 
-  it("Should return -1 if a player is inside the Map", async () => {
+  it("Should return -1 if a player is inside the area", async () => {
     assert.equal(
-      LocationUtils.robustPointInPolygon(map.getBounds(), player.getLocation()),
+      LocationUtils.robustPointInPolygon(
+        area.getBounds(),
+        player.getLocation()
+      ),
       -1
     );
   });
 
-  it("Should return 1 if a player is inside the Map", async () => {
+  it("Should return 1 if a player is inside the area", async () => {
     player = new Player("Mehdi", [48.8514708, 2.2972489]);
     assert.equal(
-      LocationUtils.robustPointInPolygon(map.getBounds(), player.getLocation()),
+      LocationUtils.robustPointInPolygon(
+        area.getBounds(),
+        player.getLocation()
+      ),
       1
     );
   });

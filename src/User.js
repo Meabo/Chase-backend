@@ -18,7 +18,12 @@ class User {
     this.player_profile.avatar_id = avatarId;
     this.player_profile.player_type = player_type;
   }
-
+  getLocation() {
+    return this.current_location;
+  }
+  setCurrentLocation(loc) {
+    this.current_location = loc;
+  }
   getUserProfile() {
     return this.profile;
   }

@@ -2,14 +2,14 @@ const { assert, expect } = require("chai");
 const Game = require("../src/Game");
 const Player = require("../src/Player");
 const ChaseObject = require("../src/ChaseObject");
-const ChaseMap = require("../src/ChaseMap");
+const Area = require("../src/Area");
 const GameHistory = require("../src/GameHistory");
 
-describe("Game engine", () => {
+describe("Game options", () => {
   let game;
   let players = [];
   let chaseobject;
-  let map;
+  let area;
 
   function get_bounds() {
     const top_left = [48.8569443, 2.2940138];
@@ -24,7 +24,7 @@ describe("Game engine", () => {
     const player1 = new Player("Bebert", [48.8574884, 2.2955138]);
     players.push(player, player1);
     chaseobject = new ChaseObject([48.8574884, 2.2955138]);
-    map = new ChaseMap(get_bounds());
+    area = new Area(get_bounds());
   });
 
   it("Creates a game", async () => {
@@ -37,18 +37,42 @@ describe("Game engine", () => {
     assert.strictEqual(game.getPlayers(), players);
   });
 
-  it("Creates an objet in the game", async () => {
+  it("Creates an object in the game", async () => {
     let game = new Game(players, chaseobject);
     assert.strictEqual(game.getObject(), chaseobject);
   });
 
   it("Creates a map in the game", async () => {
-    let game = new Game(players, chaseobject, map);
-    assert.strictEqual(game.getMap(), map);
+    let game = new Game(players, chaseobject, area);
+    assert.strictEqual(game.getArea(), area);
   });
 
   it("Creates a history in the game", async () => {
-    let game = new Game(players, chaseobject, map);
+    let game = new Game(players, chaseobject, area);
     assert.instanceOf(game.getHistory(), GameHistory);
+  });
+
+  it("Should begin a timer", async done => {
+    done("not implemented yet");
+  });
+
+  it("Should end the game when the timer is finished", async done => {
+    done("not implemented yet");
+  });
+
+  it("Should acknowledge players when a player location change", async done => {
+    done("not implemented yet");
+  });
+
+  it("Should acknowledge players when a player catch the ChaseObject", async done => {
+    done("not implemented yet");
+  });
+
+  it("Should acknowledge players when a player steal another player", async done => {
+    done("not implemented yet");
+  });
+
+  it("Should acknowledge players when a player uses a skill", async done => {
+    done("not implemented yet");
   });
 });

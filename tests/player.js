@@ -1,7 +1,7 @@
 const { assert } = require("chai");
 const Player = require("../src/Player");
 
-describe("player engine", () => {
+describe("Player engine", () => {
   it("Creates a player", async () => {
     let player = new Player();
     assert.instanceOf(player, Player);
@@ -28,5 +28,25 @@ describe("player engine", () => {
     let player = new Player(pseudo, location);
     player.moveTo(new_location);
     assert.strictEqual(player.getLocation(), new_location);
+  });
+
+  it("Should catch the ChaseObject if location is near", async done => {
+    done("not implemented yet");
+  });
+
+  it("Should steal the ChaseObject if the location is near", async done => {
+    done("not implemented yet");
+  });
+
+  it("Should uses a skill if a player has a skill", async done => {
+    done("not implemented yet");
+  });
+
+  it("Should fail to use a skill if a player has no skill", async done => {
+    done("not implemented yet");
+  });
+
+  it("Should fail to use a skill if a player use a skill before cooldown", async done => {
+    done("not implemented yet");
   });
 });

@@ -1,10 +1,10 @@
 const GameHistory = require("../src/GameHistory");
 
 class Game {
-  constructor(players_, chaseobject_, chasemap_) {
+  constructor(players_, chaseobject_, area) {
     this.players = players_;
     this.chaseobject = chaseobject_;
-    this.chasemap = chasemap_;
+    this.area = area;
     this.history = new GameHistory();
   }
 
@@ -16,8 +16,8 @@ class Game {
     return this.chaseobject;
   }
 
-  getMap() {
-    return this.chasemap;
+  getArea() {
+    return this.area;
   }
 
   getHistory() {

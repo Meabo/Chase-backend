@@ -6,7 +6,7 @@ const AuthGateway = {
   SignUp: (email, password) => {
     firebase
       .auth()
-      .createUserWithEmailAndPassword("mehdi@multis.co", "password")
+      .createUserWithEmailAndPassword(email, password)
       .then(function(result) {
         return true;
       })
@@ -20,7 +20,7 @@ const AuthGateway = {
   SignIn: (email, password) => {
     firebase
       .auth()
-      .signInWithEmailAndPassword("mehdi@multis.co", "password")
+      .signInWithEmailAndPassword(email, password)
       .then(function(result) {
         return true;
       })
