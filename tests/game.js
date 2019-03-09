@@ -10,6 +10,7 @@ describe("Game options", () => {
   let players = [];
   let chaseobject;
   let area;
+  const timeout = ms => new Promise(res => setTimeout(res, ms));
 
   function get_bounds() {
     const top_left = [48.8569443, 2.2940138];
@@ -52,13 +53,30 @@ describe("Game options", () => {
     assert.instanceOf(game.getHistory(), GameHistory);
   });
 
-  it("Should begin a timer");
+  it("Should end the game when the timer is finished", async () => {
+    let game = new Game(players, chaseobject, area);
+    await game.BeginTimer(1, 200);
+    await timeout(200);
+    assert.equal(game.isFinished(), true);
+  });
 
-  it("Should end the game when the timer is finished");
+  it("Should observe players when a player location change", async () => {
+    let game = new Game(players, chaseobject, area);
+    const playersObserver = game.getPlayersObservers();
+    playersObserver.subscribe(player_action =>
+      assert.equal(player_action.action, "move")
+    );
+    let [player_mehdi] = game.getPlayers();
+    player_mehdi.moveTo([48.855647, 2.29863]);
+  });
 
-  it("Should acknowledge players when a player location change");
-
-  it("Should acknowledge players when a player catch the ChaseObject");
+  it("Should observe players when a player catch the ChaseObject", async () => {
+    let game = new Game(players, chaseobject, area);
+    let [player_mehdi] = game.getPlayers();
+    let player_2 = game.getPlayers()[1];
+    game.catchChaseObject(player_mehdi);
+    assert.equal(player_mehdi.getPseudo(), game.getGuardian());
+  });
 
   it("Should acknowledge players when a player steal another player");
 
