@@ -8,8 +8,6 @@ const Discover = require("../src/Discover");
 describe("Rooms", () => {
   before(async () => {});
 
-  it("a user creates a room");
-
   it("a player joins a room if the location matches");
 
   it("a player quits a room");
@@ -19,10 +17,6 @@ describe("Rooms", () => {
   it("set state ready of a player in the room");
 
   it("fails if a user tries to join a room but he has already joined one");
-
-  it("acknowledge other players in the area when a user creates a room");
-
-  it("acknowledge other players in the room when a user joins/leaves the room");
 
   it("acknowledge other players when a user is ready");
 

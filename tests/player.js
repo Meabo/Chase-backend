@@ -24,15 +24,10 @@ describe("Player engine", () => {
     let pseudo = "Mehdi";
     let location = [48.8556475, 2.2986304];
     let new_location = [48.8574884, 2.2955138];
-
     let player = new Player(pseudo, location);
     player.moveTo(new_location);
     assert.strictEqual(player.getLocation(), new_location);
   });
-
-  it("Should catch the ChaseObject if location is near");
-
-  it("Should steal the ChaseObject if the location is near");
 
   it("Should uses a skill if the skill is ready");
 

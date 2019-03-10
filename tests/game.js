@@ -3,7 +3,7 @@ const Game = require("../src/Game");
 const Player = require("../src/Player");
 const ChaseObject = require("../src/ChaseObject");
 const Area = require("../src/Area");
-const GameHistory = require("../src/GameHistory");
+const History = require("../src/History");
 
 describe("Game options", () => {
   let game;
@@ -50,7 +50,7 @@ describe("Game options", () => {
 
   it("Creates a history in the game", async () => {
     let game = new Game(players, chaseobject, area);
-    assert.instanceOf(game.getHistory(), GameHistory);
+    assert.instanceOf(game.getHistory(), History);
   });
 
   it("Should end the game when the timer is finished", async () => {
@@ -70,15 +70,20 @@ describe("Game options", () => {
     player_mehdi.moveTo([48.855647, 2.29863]);
   });
 
-  it("Should observe players when a player catch the ChaseObject", async () => {
+  it("Should set guardian when a player catch the ChaseObject", async () => {
     let game = new Game(players, chaseobject, area);
     let [player_mehdi] = game.getPlayers();
     let player_2 = game.getPlayers()[1];
     game.catchChaseObject(player_mehdi);
-    assert.equal(player_mehdi.getPseudo(), game.getGuardian());
+    assert.equal(player_mehdi.getPseudo(), game.getGuardian().pseudo);
   });
 
-  it("Should acknowledge players when a player steal another player");
-
-  it("Should acknowledge players when a player uses a skill");
+  it("Should set new guardian when a player steals another player", async () => {
+    let game = new Game(players, chaseobject, area);
+    let [player_mehdi] = game.getPlayers();
+    let player_2 = game.getPlayers()[1];
+    game.catchChaseObject(player_mehdi);
+    game.stealChaseObject(player_2);
+    assert.equal(player_2.getPseudo(), game.getGuardian().pseudo);
+  });
 });
