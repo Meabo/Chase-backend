@@ -77,7 +77,11 @@ class Game {
   }
 
   getResults() {
-    return this.results.getOverview(this.history);
+    return this.results.getResults(this.history);
+  }
+
+  getResultsByPlayer(player) {
+    return this.results.getResultsByPlayer(this.history, player);
   }
 
   getPlayersObservers() {

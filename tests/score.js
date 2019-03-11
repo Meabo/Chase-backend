@@ -120,7 +120,39 @@ describe("Score Board", () => {
     assert.equal(game.getResults().total_skills_used, 0);
   });
 
-  it("Should calculate an overview result by player");
+  it("Scenario 5: Should calculate a result by player of the game", async () => {
+    let game = new Game(players, chaseobject, area);
+    let [player_mehdi] = game.getPlayers();
+    let player_bebert = game.getPlayers()[1];
+    let player_benoit = game.getPlayers()[2];
+
+    await game.BeginTimer(1, 200);
+
+    game.catchChaseObject(player_mehdi);
+    game.stealChaseObject(player_bebert);
+    game.moveTo(player_mehdi.pseudo, [48.85564, 2.2986304]);
+    game.moveTo(player_mehdi.pseudo, [48.855641, 2.2986314]);
+    game.moveTo(player_mehdi.pseudo, [48.855642, 2.2986324]);
+    game.moveTo(player_mehdi.pseudo, [48.855643, 2.2986324]);
+    game.moveTo(player_bebert.pseudo, [48.8574804, 2.2955138]);
+    game.stealChaseObject(player_bebert);
+    game.moveTo(player_benoit.pseudo, [48.8574804, 2.2955138]);
+    game.stealChaseObject(player_benoit);
+    game.moveTo(player_bebert.pseudo, [48.8574814, 2.2955148]);
+    game.moveTo(player_bebert.pseudo, [48.8574824, 2.2955158]);
+    game.moveTo(player_benoit.pseudo, [48.8574804, 2.2955138]);
+    game.moveTo(player_benoit.pseudo, [48.8574804, 2.2955138]);
+
+    await timeout(200);
+
+    assert.equal(game.isFinished(), true);
+    assert.equal(game.getGuardian(), player_benoit);
+    assert.isNumber(game.getResultsByPlayer(player_mehdi).total_distance);
+    assert.equal(game.getResultsByPlayer(player_mehdi).total_steals, 0);
+    assert.equal(game.getResultsByPlayer(player_mehdi).total_catchs, 1);
+    assert.equal(game.getResultsByPlayer(player_mehdi).total_skills_used, 0);
+    assert.equal(game.getResultsByPlayer(player_mehdi).skills_used, null);
+  });
 
   it("Should update the players XP's and Levels");
 });
