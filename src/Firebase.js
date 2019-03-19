@@ -1,6 +1,5 @@
 const firebase = require("firebase");
-const config = require("../credentials/key.json");
-firebase.initializeApp(config);
+firebase.initializeApp();
 
 const AuthGateway = {
   SignUp: (email, password) => {
