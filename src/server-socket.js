@@ -2,13 +2,13 @@ const app = require('express')();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
-io.on('connection', async (socket) => {
-	socket.on('player_location', async (loc) => {
-		socket.broadcast.emit('player_location', loc);
-	});
-});
+// Namespaces
+const rooms = io.of('/rooms');
+const games = io.of('/games');
 
-const rooms = io.of('/rooms').on('connection', (socket) => {
+io.on('connection', async (socket) => {});
+
+rooms.on('connection', (socket) => {
 	rooms.emit('welcome', 'Welcome to the Area');
 	socket.on('joinroom', function(roomNum, fn) {
 		if (Object.keys(socket.rooms).length === 1) {
@@ -72,4 +72,20 @@ const rooms = io.of('/rooms').on('connection', (socket) => {
 	});
 });
 
-exports.http = http;
+games.on('connection', (socket) => {
+	socket.on('player_location', async (loc) => {
+		socket.broadcast.emit('player_location', loc);
+	});
+});
+
+const gameHooks = {
+	sendChaseObject: (chaseObjectLoc, roomName) => {
+		games.emit('chaseObject', chaseObjectLoc);
+	}
+};
+
+module.exports = {
+	http: http,
+	games: games,
+	gameHooks: gameHooks
+};

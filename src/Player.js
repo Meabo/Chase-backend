@@ -1,30 +1,35 @@
-const { Subject } = require("rxjs");
+const { Subject } = require('rxjs');
 
 class Player {
-  constructor(pseudo_, location_) {
-    this.pseudo = pseudo_;
-    this.location = location_;
-    this.actionObserver = new Subject();
-  }
-  getPseudo() {
-    return this.pseudo;
-  }
-  getLocation() {
-    return this.location;
-  }
+	constructor(pseudo_, location_, socket_) {
+		this.pseudo = pseudo_;
+		this.location = location_;
+		this.socket = socket_;
+		this.actionObserver = new Subject();
+	}
+	getPseudo() {
+		return this.pseudo;
+	}
+	getLocation() {
+		return this.location;
+	}
 
-  getPlayerObserver() {
-    return this.actionObserver;
-  }
+	getPlayerObserver() {
+		return this.actionObserver;
+	}
 
-  moveTo(new_location) {
-    this.location = new_location;
-    this.actionObserver.next({
-      action: "move",
-      pseudo: this.pseudo,
-      location: new_location
-    });
-  }
+	getSocket() {
+		return this.socket;
+	}
+
+	moveTo(new_location) {
+		this.location = new_location;
+		this.actionObserver.next({
+			action: 'move',
+			pseudo: this.pseudo,
+			location: new_location
+		});
+	}
 }
 
 module.exports = Player;
