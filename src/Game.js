@@ -18,8 +18,24 @@ class Game {
 		this.results = new Results();
 	}
 
-	attach(socketServerFunctions) {
-		if (socketServerFunctions) this.socketServerFunctions = socketServerFunctions;
+	joinGame(socket, roomName) {
+		new Promise((resolve, reject) => {
+			socket.emit('joingame', roomName, function(res) {
+				if (res === 'success') {
+					resolve(true);
+				} else {
+					reject('error in joingame');
+				}
+			});
+		});
+	}
+
+	async playersInit() {
+		return await Promise.all(this.players.map((player) => this.joinGame(player.getSocket(), this.roomName)));
+	}
+
+	attach(socketServer) {
+		if (socketServer) this.socketServer = socketServer;
 	}
 
 	isFinished() {
@@ -41,6 +57,9 @@ class Game {
 	getGuardian() {
 		return this.guardian;
 	}
+	setGuardian(player) {
+		this.guardian = player;
+	}
 	moveTo(pseudo, loc) {
 		const player = this.players.find((player) => pseudo === player.pseudo);
 		if (player) {
@@ -48,15 +67,19 @@ class Game {
 			player.moveTo(loc);
 		}
 	}
-	sendChaseObjectLocation() {
-		this.socketServerFunctions.sendChaseObject(this.getChaseObject().getLocation(), this.roomName);
+	async sendChaseObjectLocation() {
+		return await this.socketServer.gameHooks.sendChaseObject(this.getChaseObject().getLocation(), this.roomName);
 	}
 
 	catchChaseObject(player) {
 		const distance = LocationUtils.distanceByLoc(player.getLocation(), this.chaseobject.getLocation());
 		if (distance < 10) {
-			this.history.addCatch('catch', player.pseudo, player.getLocation(), Date.now());
+			const payload = this.history.addCatch('catch', player.pseudo, player.getLocation(), Date.now());
 			this.guardian = player;
+			if (player.getSocket()) {
+				const socket = player.getSocket();
+				this.socketServer.gameHooks.newGuardian(socket, payload, this.roomName);
+			}
 		}
 	}
 
@@ -64,8 +87,18 @@ class Game {
 		if (this.guardian === null) return null;
 		const distance = LocationUtils.distanceByLoc(player.getLocation(), this.guardian.getLocation());
 		if (distance < 0.5) {
-			this.history.addSteal('steal', player.pseudo, this.guardian.pseudo, player.getLocation(), Date.now());
+			const payload = this.history.addSteal(
+				'steal',
+				player.pseudo,
+				this.guardian.pseudo,
+				player.getLocation(),
+				Date.now()
+			);
 			this.guardian = player;
+			if (player.getSocket()) {
+				const socket = player.getSocket();
+				this.socketServer.gameHooks.newGuardianSteal(socket, payload, this.roomName);
+			}
 		}
 	}
 
