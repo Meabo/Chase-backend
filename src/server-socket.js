@@ -8,6 +8,7 @@ const games = io.of('/games');
 
 io.on('connection', async (socket) => {});
 
+// Utils
 function getSocketIdByRoom(nsp, room) {
 	return new Promise((resolve, reject) => {
 		nsp.in(room).clients((error, clientsId) => {
@@ -81,8 +82,12 @@ rooms.on('connection', (socket) => {
 });
 
 games.on('connection', (socket) => {
-	socket.on('player_location', async (loc) => {
-		socket.broadcast.emit('player_location', loc);
+	socket.on('location', (payload) => {
+		socket.broadcast.emit('location', {
+			pseudo: payload.pseudo,
+			location: payload.location,
+			timestamp: Date.now()
+		});
 	});
 	socket.on('joingame', function(roomNum, fn) {
 		if (Object.keys(socket.rooms).length === 1) {
@@ -107,8 +112,11 @@ games.on('connection', (socket) => {
 });
 
 const gameHooks = {
-	sendChaseObject: async (chaseObjectLoc, roomName) => {
-		games.to(roomName).emit('chaseObject', chaseObjectLoc);
+	sendChaseObject: (chaseObjectLoc, roomName) => {
+		return new Promise((resolve, reject) => {
+			games.to(roomName).emit('chaseObject', chaseObjectLoc);
+			resolve(true);
+		});
 	},
 	newGuardian: async (socket, payload, roomName) => {
 		const socketsIdsInRoom = await getSocketIdByRoom(games, roomName);

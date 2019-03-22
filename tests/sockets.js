@@ -12,7 +12,7 @@ const options = {
 	'force new connection': true
 };
 
-describe('Socket.io : Events', async () => {
+describe('Socket.io : Unit test on Events', async () => {
 	beforeEach(async () => {
 		socketServer.http.listen(3000, () => {});
 	});
@@ -204,121 +204,131 @@ describe('Socket.io : Events', async () => {
 
 		it('Should ack the creator when everyone is ready');
 	});
+});
 
-	describe('Game actions', () => {
-		let area;
-		let chaseobject;
-		let game;
-		const timeout = (ms) => new Promise((res) => setTimeout(res, ms));
-		let player1;
-		let player2;
-		let player3;
-		const socketUrlGame = 'http://localhost:3000/games';
+describe('Socket.io: Functionnal tests with Game Engine', async () => {
+	let game;
+	const timeout = (ms) => new Promise((res) => setTimeout(res, ms));
+	let player1;
+	let player2;
+	let player3;
+	let player4;
+	const socketUrlGame = 'http://localhost:3000/games';
 
-		function get_bounds() {
-			const top_left = [ 48.8569443, 2.2940138 ];
-			const top_right = [ 48.8586221, 2.2963717 ];
-			const bot_left = [ 48.8523546, 2.3012814 ];
-			const bot_right = [ 48.8539637, 2.3035665 ];
-			return [ top_left, top_right, bot_left, bot_right ];
-		}
-
-		beforeEach(() => {
+	beforeEach(async () => {
+		socketServer.http.listen(3000, () => {});
+		const init = new Promise(async (resolve, reject) => {
 			player1 = new Player('Mehdi', [ 48.8556475, 2.2986304 ], ioClient.connect(socketUrlGame, options));
 			player2 = new Player('Bebert', [ 48.8574884, 2.2955138 ], ioClient.connect(socketUrlGame, options));
 			player3 = new Player('Red', [ 48.8574886, 2.2955128 ], ioClient.connect(socketUrlGame, options));
-			player4 = new Player('Col', [ 48.8574886, 2.2955128 ], ioClient.connect(socketUrlGame, options));
+			player4 = new Player('Col', [ 48.8574889, 2.2955121 ], ioClient.connect(socketUrlGame, options));
 			let players = [];
 			players.push(player1, player2, player3, player4);
-			chaseobject = new ChaseObject([ 48.8574884, 2.2955138 ]);
-			area = new Area(get_bounds());
-			game = new Game(players, chaseobject, area);
+			game = new Game(players, new ChaseObject([ 48.8574884, 2.2955138 ]), null);
 			game.attach(socketServer);
+			resolve(true);
 		});
+		await init;
+		await game.playersInit();
+		await timeout(200);
+	});
 
-		afterEach(() => {
-			game.getPlayers().map((player) => player.getSocket().disconnect());
-		});
+	afterEach(async () => {
+		game.getPlayers().map((player) => player.getSocket().disconnect());
+		socketServer.http.close();
+	});
 
+	describe('Game actions', async () => {
 		it('Send location of the ChaseObject to players in the game', async () => {
-			let players_acknowledged = 0;
-			await game.playersInit();
-
-			return new Promise(function(resolve, reject) {
+			await game.sendChaseObjectLocation();
+			const resultPromises = await Promise.all(
 				game.getPlayers().map((player) => {
-					player.getSocket().on('connect', () => {
+					return new Promise((resolve, reject) => {
 						player.getSocket().on('chaseObject', function(loc) {
 							assert.deepEqual(loc, game.getChaseObject().getLocation());
-							players_acknowledged++;
-							if (players_acknowledged === game.getPlayers().length - 1) {
-								resolve(true);
-							}
+							resolve(1);
 						});
 					});
-				});
-				setTimeout(async () => {
-					await game.sendChaseObjectLocation();
-				}, 20);
-			});
+				})
+			);
+			assert.equal(resultPromises.reduce((acc, cur) => acc + cur, 0), game.getPlayers().length);
 		});
 
 		it('Send an event to players in the game : Catch the ChaseObject', async () => {
-			let counterGuardian = 0;
-			let counterChasers = 0;
-			await game.playersInit();
-
-			const socket = player1.getSocket();
-			return new Promise((resolve, reject) => {
-				socket.on('connect', () => {
-					socket.on('newGuardian', function(msg) {
-						assert.equal(msg, 'You are the new guardian');
-						counterGuardian++;
-						if (counterGuardian === 1 && counterChasers === game.getPlayers().length - 1) resolve(true);
-					});
+			const guardianPromise = new Promise((resolve, reject) => {
+				player1.getSocket().on('newGuardian', function(msg) {
+					assert.equal(msg, 'You are the new guardian');
+					resolve(1);
 				});
-				game.getPlayers().filter((player) => player.pseudo !== player1.pseudo).map((player) => {
-					const socket = player.getSocket();
-					socket.on('connect', () => {
+			});
+			const chasersPromise = game
+				.getPlayers()
+				.filter((player) => player.pseudo !== player1.pseudo)
+				.map((player) => {
+					return new Promise((resolve, reject) => {
+						const socket = player.getSocket();
 						socket.on('newGuardian', function(payload) {
 							assert.equal(payload.pseudo, player1.pseudo);
-							counterChasers++;
+							resolve(1);
 						});
 					});
 				});
 
-				setTimeout(async function() {
-					game.catchChaseObject(player1);
-				}, 20);
-			});
+			await game.catchChaseObject(player1);
+			const resultPromises = await Promise.all(chasersPromise.concat([ guardianPromise ]));
+			assert.equal(resultPromises.reduce((acc, cur) => acc + cur, 0), game.getPlayers().length);
 		});
+
 		it('Send an event to players in the game : Steal the ChaseObject', async () => {
-			let counterGuardian = 0;
-			let counterChasers = 0;
-			await game.playersInit();
-			game.setGuardian(player1);
-			const socket = player2.getSocket();
-			return new Promise((resolve, reject) => {
-				socket.on('connect', () => {
-					socket.on('newGuardianSteal', function(msg) {
-						assert.equal(msg, 'You are the new guardian');
-						counterGuardian++;
-						if (counterGuardian === 1 && counterChasers === game.getPlayers().length - 1) resolve(true);
-					});
+			const socketGuardian = new Promise((resolve, reject) => {
+				player2.getSocket().on('newGuardianSteal', function(msg) {
+					assert.equal(msg, 'You are the new guardian');
+					resolve(1);
 				});
-				game.getPlayers().filter((player) => player.pseudo !== player2.pseudo).map((player) => {
-					const socket = player.getSocket();
-					socket.on('connect', () => {
+			});
+
+			const socketChasers = game
+				.getPlayers()
+				.filter((player) => player.pseudo !== player2.pseudo)
+				.map((player) => {
+					return new Promise((resolve, reject) => {
+						const socket = player.getSocket();
 						socket.on('newGuardianSteal', function(payload) {
 							assert.equal(payload.pseudo, player2.pseudo);
-							counterChasers++;
+							resolve(1);
 						});
 					});
 				});
 
-				setTimeout(async function() {
-					game.stealChaseObject(player2);
-				}, 100);
+			game.setGuardian(player1);
+			await game.stealChaseObject(player2);
+			const resultPromises = await Promise.all(socketChasers.concat([ socketGuardian ]));
+			assert.equal(resultPromises.reduce((acc, cur) => acc + cur, 0), game.getPlayers().length);
+		});
+
+		it('Before Catch Event: Send location of Players to Players', async () => {
+			let counter = 0;
+
+			const socketsListeners = game.getPlayers().map((player) => {
+				return new Promise((resolve, reject) => {
+					player.getSocket().on('location', (payload) => {
+						counter++;
+						resolve(1);
+					});
+				});
 			});
+
+			const socketEmitters = new Promise((resolve, reject) => {
+				game.moveTo(player1.pseudo, [ 48.8574884, 2.2955138 ]);
+				player1.getSocket().emit('location', { pseudo: player1.pseudo, location: player1.getLocation() });
+				player2.getSocket().emit('location', { pseudo: player2.pseudo, location: player2.getLocation() });
+				player3.getSocket().emit('location', { pseudo: player3.pseudo, location: player3.getLocation() });
+				player4.getSocket().emit('location', { pseudo: player4.pseudo, location: player4.getLocation() });
+				resolve();
+			});
+			await socketEmitters;
+			await Promise.all(socketsListeners);
+			assert.equal(counter, game.getPlayers().length * (game.getPlayers().length - 1));
 		});
 		it('Send location of the Guardian to players');
 		it('Players should receive only Guardian location (not players ones)');

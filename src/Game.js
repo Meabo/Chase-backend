@@ -22,7 +22,7 @@ class Game {
 		new Promise((resolve, reject) => {
 			socket.emit('joingame', roomName, function(res) {
 				if (res === 'success') {
-					resolve(true);
+					resolve(res);
 				} else {
 					reject('error in joingame');
 				}
@@ -67,6 +67,16 @@ class Game {
 			player.moveTo(loc);
 		}
 	}
+
+	moveTo(pseudo, loc) {
+		const player = this.players.find((player) => pseudo === player.pseudo);
+		if (player) {
+			this.history.addMove(pseudo, player.getLocation(), loc, Date.now());
+			//const newPlayer = Object.assign({}, player, { location: loc });
+			const newPlayer = { ...player, location: loc };
+		}
+	}
+
 	async sendChaseObjectLocation() {
 		return await this.socketServer.gameHooks.sendChaseObject(this.getChaseObject().getLocation(), this.roomName);
 	}
@@ -84,22 +94,25 @@ class Game {
 	}
 
 	stealChaseObject(player) {
-		if (this.guardian === null) return null;
-		const distance = LocationUtils.distanceByLoc(player.getLocation(), this.guardian.getLocation());
-		if (distance < 0.5) {
-			const payload = this.history.addSteal(
-				'steal',
-				player.pseudo,
-				this.guardian.pseudo,
-				player.getLocation(),
-				Date.now()
-			);
-			this.guardian = player;
-			if (player.getSocket()) {
+		return new Promise(async (resolve, reject) => {
+			if (this.guardian === null) return null;
+			const distance = LocationUtils.distanceByLoc(player.getLocation(), this.guardian.getLocation());
+			if (distance < 0.5) {
+				const payload = this.history.addSteal(
+					'steal',
+					player.pseudo,
+					this.guardian.pseudo,
+					player.getLocation(),
+					Date.now()
+				);
+				this.guardian = player;
 				const socket = player.getSocket();
-				this.socketServer.gameHooks.newGuardianSteal(socket, payload, this.roomName);
+				if (socket) {
+					await this.socketServer.gameHooks.newGuardianSteal(socket, payload, this.roomName);
+					resolve(true);
+				}
 			}
-		}
+		});
 	}
 
 	getResults() {
