@@ -62,20 +62,23 @@ class Game {
 	}
 	moveTo(pseudo, loc) {
 		const player = this.players.find((player) => pseudo === player.pseudo);
-		if (player) {
+		if (player && player.getSocket()) {
 			this.history.addMove(pseudo, player.getLocation(), loc, Date.now());
 			player.moveTo(loc);
+			if (this.guardian) {
+			} else {
+			}
 		}
 	}
 
-	moveTo(pseudo, loc) {
+	/*	moveTo(pseudo, loc) {
 		const player = this.players.find((player) => pseudo === player.pseudo);
 		if (player) {
 			this.history.addMove(pseudo, player.getLocation(), loc, Date.now());
 			//const newPlayer = Object.assign({}, player, { location: loc });
 			const newPlayer = { ...player, location: loc };
 		}
-	}
+	}*/
 
 	async sendChaseObjectLocation() {
 		return await this.socketServer.gameHooks.sendChaseObject(this.getChaseObject().getLocation(), this.roomName);
