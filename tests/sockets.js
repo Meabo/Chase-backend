@@ -1,5 +1,7 @@
 const ioClient = require('socket.io-client');
-const socketUrl = 'http://localhost:3000';
+const port = 4000;
+const socketUrl = 'http://localhost:' + port;
+
 const { assert } = require('chai');
 const socketServer = require('../src/server-socket');
 const Game = require('../src/Game');
@@ -11,10 +13,10 @@ const options = {
 	transports: [ 'websocket' ],
 	'force new connection': true
 };
-
+/*
 describe('Socket.io : Unit test on Events', async () => {
 	beforeEach(async () => {
-		socketServer.http.listen(3000, () => {});
+		socketServer.http.listen(port, () => {});
 	});
 
 	afterEach(async () => {
@@ -334,3 +336,4 @@ describe('Socket.io: Functionnal tests with Game Engine', async () => {
 		it('Players should receive only Guardian location (not players ones)');
 	});
 });
+*/

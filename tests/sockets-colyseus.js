@@ -1,12 +1,8 @@
-const ioClient = require('socket.io-client');
 const socketUrl = 'ws://localhost:3000';
-const { gameServer } = require('../src/Sockets/SocketServer');
+const { methods, gameServer } = require('../src/Sockets/SocketServer');
 const { Client } = require('colyseus.js');
 const { assert } = require('chai');
-
-const Game = require('../src/Game');
-const Player = require('../src/Player');
-const ChaseObject = require('../src/ChaseObject');
+const Area = require('../src/Area');
 
 const options = {
 	transports: [ 'websocket' ],
@@ -14,7 +10,17 @@ const options = {
 };
 
 describe('Colyseus : Unit test on Events', async () => {
+	let areas = [];
 	before(() => {
+		let top_left = [ 48.8569443, 2.2940138 ];
+		let top_right = [ 48.8586221, 2.2963717 ];
+		let bot_left = [ 48.8523546, 2.3012814 ];
+		let bot_right = [ 48.8539637, 2.3035665 ];
+		let bounds = [ top_left, top_right, bot_left, bot_right ];
+		let area = new Area([ 48.8556475, 2.2986304 ], bounds, 'AreaA');
+		let area1 = new Area([ 48.8556475, 2.2986304 ], bounds, 'AreaB');
+		areas.push(area, area1);
+		methods.init(areas);
 		gameServer.listen(3000, () => {});
 	});
 
@@ -24,6 +30,7 @@ describe('Colyseus : Unit test on Events', async () => {
 
 	describe('Basic Connection', () => {
 		let client;
+
 		beforeEach(async () => {
 			client = new Client(socketUrl);
 		});
@@ -42,34 +49,104 @@ describe('Colyseus : Unit test on Events', async () => {
 
 	describe('Welcome to Discovery', () => {
 		let player1;
-		let player2;
-		let player3;
 
 		beforeEach(() => {
 			player1 = new Client('ws://localhost:3000');
-			player2 = new Client('ws://localhost:3000');
-			player3 = new Client('ws://localhost:3000');
 		});
 
 		afterEach(() => {
 			player1.close();
-			player2.close();
-			player3.close();
 		});
 
-		it('Players should receive a Welcome message', (done) => {
+		it('Players should receive Areas in Discovery mode', (done) => {
 			const listenerPlayer1 = player1.join('discovery');
-			listenerPlayer1.onJoin.add(() => {
-				console.log(`${listenerPlayer1.sessionId} joined!`);
+
+			listenerPlayer1.onJoin.add(() => {});
+			listenerPlayer1.onStateChange.add((state) => {});
+			listenerPlayer1.listen('areas', (change) => {
+				assert.deepEqual(areas, change.value);
+				done();
 			});
-			listenerPlayer1.onStateChange.add((state) => {
-				console.log('new state:', state);
+		});
+	});
+	describe('Enter an Area', () => {
+		let player1;
+
+		beforeEach(() => {
+			player1 = new Client('ws://localhost:3000');
+		});
+
+		afterEach(() => {
+			player1.close();
+		});
+
+		it('Players should join an Area after getting Areas in Discovery', async () => {
+			let dataReceived;
+			const listenerPlayer1 = player1.join('discovery');
+
+			listenerPlayer1.onJoin.add(() => {});
+			listenerPlayer1.onStateChange.add((state) => {});
+			const getAreas = new Promise((resolve, reject) => {
+				listenerPlayer1.listen('areas', (change) => {
+					assert.deepEqual(areas, change.value);
+					dataReceived = change.value;
+					resolve(dataReceived);
+					//;
+				});
 			});
-			listenerPlayer1.listen('messages/:index', (change) => {
-				console.log(change.operation); // ~> "add"
-				console.log(change.path.index); // ~> "1"
-				console.log(change.value); // ~> "Hello world!"
+			const dataR = await getAreas;
+			listenerPlayer1.send({ action: 'joinarea', roomName: dataR[0].name });
+			const listenerPlayer2 = player1.join(dataR[0].name);
+			listenerPlayer2.onJoin.add(() => {});
+			listenerPlayer2.onStateChange.add((state) => {});
+			const getArea = new Promise((resolve, reject) => {
+				listenerPlayer2.listen('area', (change) => {
+					assert.deepEqual(areas[0], change.value);
+					dataReceived = change.value;
+					resolve(dataReceived);
+				});
 			});
+			await getArea;
+		});
+	});
+
+	describe('Enter a Game Room', () => {
+		let player1;
+
+		beforeEach(() => {
+			player1 = new Client('ws://localhost:3000');
+		});
+
+		afterEach(() => {
+			player1.close();
+		});
+
+		it('Create a game room', async () => {
+			let dataReceived;
+			const listenerPlayer1 = player1.join(areas[0].name);
+
+			listenerPlayer1.onJoin.add(() => {});
+			listenerPlayer1.onStateChange.add((state) => {});
+			const getAreas = new Promise((resolve, reject) => {
+				listenerPlayer1.listen('area', (change) => {
+					assert.deepEqual(areas[0], change.value);
+					dataReceived = change.value;
+					resolve(dataReceived);
+					//;
+				});
+			});
+			const dataR = await getAreas;
+			listenerPlayer1.send({ action: 'joingameroom', name: 'SuperGame', create: true });
+			const listenerPlayer2 = player1.join('SuperGame');
+			listenerPlayer2.onJoin.add(() => {});
+			listenerPlayer2.onStateChange.add((state) => {});
+			const getArea = new Promise((resolve, reject) => {
+				listenerPlayer2.listen('history', (change) => {
+					dataReceived = change.value;
+					resolve(dataReceived);
+				});
+			});
+			await getArea;
 		});
 	});
 });
