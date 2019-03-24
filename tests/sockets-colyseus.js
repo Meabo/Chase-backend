@@ -112,13 +112,16 @@ describe('Colyseus : Unit test on Events', async () => {
 
 	describe('Enter a Game Room', () => {
 		let player1;
+		let player2;
 
-		beforeEach(() => {
+		before(async () => {
 			player1 = new Client('ws://localhost:3000');
+			player2 = new Client('ws://localhost:3000');
 		});
 
-		afterEach(() => {
+		after(async () => {
 			player1.close();
+			player2.close();
 		});
 
 		it('Create a game room', async () => {
@@ -135,21 +138,106 @@ describe('Colyseus : Unit test on Events', async () => {
 					//;
 				});
 			});
-			const dataR = await getAreas;
+			await getAreas;
 			listenerPlayer1.send({ action: 'joingameroom', name: 'SuperGame', create: true });
 			const listenerPlayer2 = player1.join('SuperGame');
-			listenerPlayer2.onJoin.add(() => {});
-			listenerPlayer2.onStateChange.add((state) => {});
-			const getArea = new Promise((resolve, reject) => {
-				listenerPlayer2.listen('history', (change) => {
-					dataReceived = change.value;
-					resolve(dataReceived);
+			const PromiseToResolve = new Promise((resolve, reject) => {
+				listenerPlayer2.onJoin.add(() => {
+					console.log('Player1 joined GameRoom');
+					listenerPlayer2.leave();
+					resolve();
 				});
 			});
-			await getArea;
+
+			await PromiseToResolve;
+		});
+	});
+	describe('Ready feature', () => {
+		let player1;
+		let player2;
+
+		before(async () => {
+			methods.createGameLobby({ name: 'SuperGame' });
+			player1 = new Client('ws://localhost:3000');
+			player2 = new Client('ws://localhost:3000');
+		});
+
+		after(async () => {
+			player1.close();
+			player2.close();
+		});
+
+		it('Players ready in GameRoom', async () => {
+			const listenerPlayer = player1.join('SuperGame');
+			const listenerPlayer2 = player2.join('SuperGame');
+
+			listenerPlayer.onJoin.add(() => {
+				listenerPlayer.send({ action: 'ready', pseudo: 'player1' });
+			});
+
+			const getReadyPlayer1 = new Promise((resolve, reject) => {
+				listenerPlayer.onMessage.add((message) => {
+					if (message.action === 'everyone_ready') resolve();
+				});
+			});
+
+			listenerPlayer2.onJoin.add(() => {
+				listenerPlayer2.send({ action: 'ready', pseudo: 'player2' });
+			});
+			const getReadyPlayer2 = new Promise((resolve, reject) => {
+				listenerPlayer2.onMessage.add((message) => {
+					if (message.action === 'everyone_ready') resolve();
+				});
+			});
+
+			await getReadyPlayer1;
+			await getReadyPlayer2;
+		});
+	});
+	describe('Game Engine', () => {
+		let player1;
+		let player2;
+
+		before(async () => {
+			methods.createGame({ name: 'SuperGameBegins' });
+			player1 = new Client('ws://localhost:3000');
+			player2 = new Client('ws://localhost:3000');
+		});
+
+		after(async () => {
+			player1.close();
+			player2.close();
+		});
+
+		it('Still waiting for something', async () => {
+			const listenerPlayer = player1.join('SuperGameBegins');
+			const listenerPlayer2 = player2.join('SuperGameBegins');
+
+			/*	listenerPlayer.onJoin.add(() => {
+				listenerPlayer.send({ action: 'ready', pseudo: 'player1' });
+			});
+
+			const getReadyPlayer1 = new Promise((resolve, reject) => {
+				listenerPlayer.onMessage.add((message) => {
+				});
+			});
+
+			listenerPlayer2.onJoin.add(() => {
+				listenerPlayer2.send({ action: 'ready', pseudo: 'player2' });
+			});
+			const getReadyPlayer2 = new Promise((resolve, reject) => {
+				listenerPlayer2.onMessage.add((message) => {
+					if (message.action === 'everyone_ready') resolve();
+				});
+			});
+			//listenerPlayer.send({ action: 'ready' });
+			//listenerPlayer2.send({ action: 'ready' });
+			await getReadyPlayer1;
+			await getReadyPlayer2;*/
 		});
 	});
 });
+
 /* 
 	describe('Joining & Leave room', () => {
 		let player1;

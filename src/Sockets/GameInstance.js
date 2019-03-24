@@ -1,29 +1,29 @@
 const colyseus = require('colyseus');
+const emitter = require('../Emitter/emitter');
 
-class GameRoom extends colyseus.Room {
+class GameInstance extends colyseus.Room {
 	// When room is initialized
 	onInit(options) {
 		this.setState({
 			history: [],
-			players: []
+			players: [],
+			ready: []
 		});
 	}
 
 	// Checks if a new client is allowed to join. (default: `return true`)
 	requestJoin(options, isNew) {
-		console.log(options);
-		console.log(isNew);
-
 		return true;
 	}
-
 	// Authorize client based on provided options before WebSocket handshake is complete
-	//onAuth(options) {}
+	/*onAuth(options) {
+		return true;
+	}*/
 
 	// When client successfully join the room
 	onJoin(client, options, auth) {
-		console.log(`${client.sessionId} join GameRoom.`);
-		this.state.history.push(`${client.sessionId} joined GameRoom.`);
+		console.log(`${client.sessionId} join GameInstance.`);
+		this.state.history.push(`${client.sessionId} joined GameInstance.`);
 	}
 
 	// When a client sends a message
@@ -31,11 +31,11 @@ class GameRoom extends colyseus.Room {
 
 	// When a client leaves the room
 	onLeave(client, consented) {
-		this.state.history.push(`${client.sessionId} left GameRoom.`);
+		this.state.history.push(`${client.sessionId} left GameInstance.`);
 	}
 
 	// Cleanup callback, called after there are no more clients in the room. (see `autoDispose`)
 	onDispose() {}
 }
 
-module.exports = GameRoom;
+module.exports = GameInstance;

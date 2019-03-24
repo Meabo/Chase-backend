@@ -4,7 +4,9 @@ const colyseus = require('colyseus');
 
 const Discovery = require('./DiscoveryRoom');
 const AreaRoom = require('./AreaRoom');
-const GameRoom = require('./GameRoom');
+const GameLobby = require('./GameLobby');
+const GameInstance = require('./GameInstance');
+
 const emitter = require('../Emitter/emitter');
 
 const gameServer = new colyseus.Server({
@@ -18,9 +20,12 @@ const gameServer = new colyseus.Server({
 	}
 });
 
-emitter.eventBus.on('createGameRoom', function(data) {
-	console.log('EventBus', data);
-	methods.createGameRoom(data);
+emitter.eventBus.on('createGameLobby', function(data) {
+	methods.createGameLobby(data);
+});
+
+emitter.eventBus.on('createGame', function(data) {
+	methods.createGame(data);
 });
 
 const methods = {
@@ -42,8 +47,11 @@ const methods = {
 			});
 		}
 	},
-	createGameRoom: (data) => {
-		gameServer.register(data.name, GameRoom, data);
+	createGameLobby: (data) => {
+		gameServer.register(data.name, GameLobby, data);
+	},
+	createGame: (data) => {
+		gameServer.register(data.name, GameInstance, data);
 	}
 };
 

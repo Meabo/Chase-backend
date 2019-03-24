@@ -31,9 +31,7 @@ class AreaRoom extends colyseus.Room {
 	// When a client sends a message
 	onMessage(client, data) {
 		if (data.action === 'joingameroom') {
-			console.log('GameServer');
-			emitter.eventBus.sendEvent('createGameRoom', data);
-			//socketServerInstance.createGameRoom(data);
+			emitter.eventBus.sendEvent('createGameLobby', data);
 			this.onLeave(client, true);
 		}
 	}
