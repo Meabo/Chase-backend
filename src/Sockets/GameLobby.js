@@ -5,6 +5,7 @@ class GameLobby extends colyseus.Room {
 	// When room is initialized
 	onInit(options) {
 		this.setState({
+			name: options.name,
 			history: [],
 			players: [],
 			ready: []
@@ -39,7 +40,7 @@ class GameLobby extends colyseus.Room {
 				this.state.ready.push(data.pseudo);
 			}
 			if (this.everyoneIsReady(this.clients, this.state.ready)) {
-				emitter.eventBus.sendEvent('createGame', { name: 'SuperGame' });
+				emitter.eventBus.sendEvent('createGame', { name: this.state.name });
 				this.broadcast({ action: 'everyone_ready' });
 			}
 		}

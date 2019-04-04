@@ -209,7 +209,7 @@ describe('Colyseus : Unit test on Events', async () => {
 			player2.close();
 		});
 
-		it('Still waiting for something', async () => {
+		it('Should start a game and announce a winner', async () => {
 			const listenerPlayer = player1.join('SuperGameBegins');
 			const listenerPlayer2 = player2.join('SuperGameBegins');
 
